@@ -18,11 +18,12 @@ class CategoryMealsPage extends StatelessWidget {
     final String categoryTitle = routeArgs['title'];
 
     // grab the meal of the selected category (clicked category)
-    final selectedMeal = DUMMY_MEALS.where((meal) {
+    final List<dynamic> selectedMeal = DUMMY_MEALS.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
 
     // View logic
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -34,11 +35,7 @@ class CategoryMealsPage extends StatelessWidget {
       body: ListView.builder(
         itemBuilder: ((context, index) {
           return MealItem(
-            mealTitle: selectedMeal[index].title,
-            affordability: selectedMeal[index].affordability,
-            complexity: selectedMeal[index].complexity,
-            duration: selectedMeal[index].duration,
-            imageUrl: selectedMeal[index].imageUrl,
+            selectedMeal: selectedMeal[index],
           );
         }),
         itemCount: selectedMeal.length,

@@ -24,6 +24,12 @@ ThemeData themeStyle() {
         color: Colors.white,
         fontWeight: FontWeight.bold,
       ),
+      // Setting up headline 3
+      headline3: GoogleFonts.raleway(
+        fontSize: 36,
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      ),
     ),
   );
 }

@@ -5,18 +5,10 @@ import '../pages/meal_recipe_page.dart';
 import '../../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  final String mealTitle;
-  final int duration;
-  final Complexity complexity;
-  final Affordability affordability;
-  final String imageUrl;
+  final Meal selectedMeal;
 
   const MealItem({
-    required this.mealTitle,
-    required this.duration,
-    required this.affordability,
-    required this.complexity,
-    required this.imageUrl,
+    required this.selectedMeal,
     Key? key,
   }) : super(key: key);
 
@@ -24,13 +16,13 @@ class MealItem extends StatelessWidget {
   void selectMeal(BuildContext context) {
     Navigator.of(context).pushNamed(
       MealRecipePage.pageName,
-      // arguments:
+      arguments: selectedMeal,
     );
   }
 
   // Creating two string getters for complexity and affordability
   String get strAffordability {
-    switch (affordability) {
+    switch (selectedMeal.affordability) {
       case Affordability.affordable:
         return "Affordable";
 
@@ -47,7 +39,7 @@ class MealItem extends StatelessWidget {
 
   // For complexity
   String get strComplexity {
-    switch (complexity) {
+    switch (selectedMeal.complexity) {
       case Complexity.challenging:
         return "Challenging";
 
@@ -70,6 +62,7 @@ class MealItem extends StatelessWidget {
         selectMeal(context);
       },
       child: Card(
+        // color: categoryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(13),
         ),
@@ -83,7 +76,7 @@ class MealItem extends StatelessWidget {
                     topRight: Radius.circular(13),
                   ),
                   child: Image.network(
-                    imageUrl,
+                    selectedMeal.imageUrl,
                     height: MediaQuery.of(context).size.height * 0.3,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -98,7 +91,7 @@ class MealItem extends StatelessWidget {
                     alignment: Alignment.center,
                     color: Colors.black54,
                     child: Text(
-                      mealTitle,
+                      selectedMeal.title,
                       softWrap: true,
                       style: const TextStyle(
                         fontSize: 30,
@@ -110,35 +103,35 @@ class MealItem extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       const Icon(
-                        Icons.watch_later_rounded,
-                        color: Colors.amber,
+                        Icons.watch_later_outlined,
+                        color: Colors.purple,
                       ),
-                      Text('$duration Min'),
+                      Text('${selectedMeal.duration} Min'),
                     ],
                   ),
                   Row(
                     children: [
                       const Icon(
-                        Icons.work,
-                        color: Colors.amber,
+                        Icons.work_outline,
+                        color: Colors.purple,
                       ),
-                      Text('$strComplexity}'),
+                      Text(strComplexity),
                     ],
                   ),
                   Row(
                     children: [
                       const Icon(
-                        Icons.monetization_on_rounded,
-                        color: Colors.amber,
+                        Icons.attach_money,
+                        color: Colors.purple,
                       ),
-                      Text('$strAffordability}'),
+                      Text(strAffordability),
                     ],
                   ),
                 ],
