@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'view/pages/category_meals_page.dart';
 import 'view/pages/categories_page.dart';
 import 'view/pages/meal_recipe_page.dart';
+import 'view/pages/tabs_page.dart';
 
 import 'view/themes/theme_style.dart';
 
@@ -21,10 +22,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: themeStyle(),
       darkTheme: ThemeData.dark(),
+
       // home: const CategoriesPage(),
       initialRoute: '/',
       routes: {
-        '/': (context) => const CategoriesPage(),
+        // '/': (context) => const CategoriesPage(),
+        '/': (context) => const TabsPage(),
         CategoryMealsPage.pageName: (context) => const CategoryMealsPage(),
         MealRecipePage.pageName: (context) => const MealRecipePage(),
       },
