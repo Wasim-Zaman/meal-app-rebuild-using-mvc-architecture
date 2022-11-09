@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/category_item.dart';
-import '../../controllers/dummy_categories.dart';
+import '../../controllers/dummy_data.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});

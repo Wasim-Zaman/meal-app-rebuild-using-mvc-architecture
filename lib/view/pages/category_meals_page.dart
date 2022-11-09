@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../controllers/dummy_meals.dart';
+import '../widgets/meal_item.dart';
+import '../../controllers/dummy_data.dart';
+import './meal_recipe_page.dart';
 
 class CategoryMealsPage extends StatelessWidget {
   static const String pageName = '/category-meals';
@@ -17,53 +19,35 @@ class CategoryMealsPage extends StatelessWidget {
     final String categoryTitle = routeArgs['title'];
 
     // grab the meal of the selected category (clicked category)
-    final selectedMeal = DUMMY_MEALS.where((meal) {
+    final selectedMeal = dummyMeals.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
+
+    // A controller for the selected meal after tapping
+    void selectMeal() {
+      Navigator.of(context).pushNamed(
+        MealRecipePage.pageName,
+        // arguments:
+      );
+    }
 
     // View logic
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(categoryTitle),
+        title: Text(
+          categoryTitle,
+          style: Theme.of(context).textTheme.headline6,
+        ),
       ),
       body: ListView.builder(
         itemBuilder: ((context, index) {
-          return Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              // color: Theme.of(context).accentColor,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            // child: Image.network(selectedMeal[index].imageUrl),
-            child: Stack(
-              children: [
-                Card(
-                  margin: const EdgeInsets.all(10),
-                  child: Image.network(
-                    selectedMeal[index].imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: 10,
-                  right: 10,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.black54,
-                    child: Text(
-                      selectedMeal[index].title,
-                      softWrap: true,
-                      style: const TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          return MealItem(
+            mealTitle: selectedMeal[index].title,
+            affordability: selectedMeal[index].affordability,
+            complexity: selectedMeal[index].complexity,
+            duration: selectedMeal[index].duration,
+            imageUrl: selectedMeal[index].imageUrl,
           );
         }),
         itemCount: selectedMeal.length,
