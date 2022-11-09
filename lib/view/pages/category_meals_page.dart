@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../widgets/meal_item.dart';
 import '../../controllers/dummy_data.dart';
-import './meal_recipe_page.dart';
 
 class CategoryMealsPage extends StatelessWidget {
   static const String pageName = '/category-meals';
@@ -19,17 +18,9 @@ class CategoryMealsPage extends StatelessWidget {
     final String categoryTitle = routeArgs['title'];
 
     // grab the meal of the selected category (clicked category)
-    final selectedMeal = dummyMeals.where((meal) {
+    final selectedMeal = DUMMY_MEALS.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
-
-    // A controller for the selected meal after tapping
-    void selectMeal() {
-      Navigator.of(context).pushNamed(
-        MealRecipePage.pageName,
-        // arguments:
-      );
-    }
 
     // View logic
     return Scaffold(

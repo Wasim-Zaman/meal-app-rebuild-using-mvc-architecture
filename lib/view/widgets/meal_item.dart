@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../pages/meal_recipe_page.dart';
+
 import '../../models/meal.dart';
 
 class MealItem extends StatelessWidget {
@@ -18,11 +20,55 @@ class MealItem extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  // A controller for the selected meal after tapping
+  void selectMeal(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      MealRecipePage.pageName,
+      // arguments:
+    );
+  }
+
+  // Creating two string getters for complexity and affordability
+  String get strAffordability {
+    switch (affordability) {
+      case Affordability.affordable:
+        return "Affordable";
+
+      case Affordability.luxurious:
+        return "Luxurious";
+
+      case Affordability.pricey:
+        return "Pricey";
+
+      default:
+        return "Unknown";
+    }
+  }
+
+  // For complexity
+  String get strComplexity {
+    switch (complexity) {
+      case Complexity.challenging:
+        return "Challenging";
+
+      case Complexity.hard:
+        return "Hard";
+
+      case Complexity.simple:
+        return "Simple";
+
+      default:
+        return "Unknown";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       splashColor: Theme.of(context).primaryColor,
-      onTap: () {},
+      onTap: () {
+        selectMeal(context);
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(13),
@@ -83,7 +129,7 @@ class MealItem extends StatelessWidget {
                         Icons.work,
                         color: Colors.amber,
                       ),
-                      Text('$complexity}'),
+                      Text('$strComplexity}'),
                     ],
                   ),
                   Row(
@@ -92,7 +138,7 @@ class MealItem extends StatelessWidget {
                         Icons.monetization_on_rounded,
                         color: Colors.amber,
                       ),
-                      Text('$affordability}'),
+                      Text('$strAffordability}'),
                     ],
                   ),
                 ],
