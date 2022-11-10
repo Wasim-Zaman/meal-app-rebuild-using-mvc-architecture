@@ -5,6 +5,7 @@ import '../../controllers/dummy_data.dart';
 
 class CategoriesPage extends StatelessWidget {
   const CategoriesPage({super.key});
+  static const String pageName = '/category-page';
 
   @override
   Widget build(BuildContext context) {
