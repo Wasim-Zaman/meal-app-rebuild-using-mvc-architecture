@@ -5,8 +5,11 @@ import '../pages/favorites_page.dart';
 
 import '../widgets/main_drawer.dart';
 
+import '../../models/meal.dart';
+
 class TabsPage extends StatelessWidget {
-  const TabsPage({super.key});
+  final List<Meal> favoritedMeals;
+  const TabsPage(this.favoritedMeals, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +32,13 @@ class TabsPage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            CategoriesPage(),
-            FavoritesPage(),
+            const CategoriesPage(),
+            FavoritesPage(favoritedMeals),
           ],
         ),
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
       ),
     );
   }

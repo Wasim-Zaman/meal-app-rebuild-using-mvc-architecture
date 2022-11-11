@@ -2,15 +2,34 @@ import 'package:flutter/material.dart';
 
 import '../../models/meal.dart';
 
-class MealRecipePage extends StatelessWidget {
+class MealRecipePage extends StatefulWidget {
   static const pageName = '/meal-recipe';
-  const MealRecipePage({super.key});
+
+  final Function toggleFavorites;
+
+  const MealRecipePage(this.toggleFavorites, {super.key});
+
+  @override
+  State<MealRecipePage> createState() => _MealRecipePageState();
+}
+
+class _MealRecipePageState extends State<MealRecipePage> {
+  Meal? selectedmeal;
+  bool flag = true;
+  @override
+  void didChangeDependencies() {
+    if (flag) {
+      selectedmeal = ModalRoute.of(context)?.settings.arguments as Meal;
+      flag = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Grab the arguments that we sent at to the page while calling
-    final selectedmeal = ModalRoute.of(context)?.settings.arguments as Meal;
 
+    // _isFavorite = selectedmeal.isFavorite;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -18,6 +37,25 @@ class MealRecipePage extends StatelessWidget {
           'Meal Recipe',
           style: Theme.of(context).textTheme.headline6,
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Make the meal favorite
+          if (!selectedmeal!.isFavorite) {
+            setState(() {
+              widget.toggleFavorites(selectedmeal);
+              selectedmeal!.isFavorite = true;
+            });
+          } else if (selectedmeal!.isFavorite) {
+            setState(() {
+              widget.toggleFavorites(selectedmeal);
+              selectedmeal!.isFavorite = false;
+            });
+          }
+        },
+        child: (Icon(selectedmeal!.isFavorite
+            ? Icons.star
+            : Icons.star_border_outlined)),
       ),
       body: ListView(
         children: <Widget>[
@@ -27,7 +65,7 @@ class MealRecipePage extends StatelessWidget {
               bottomRight: Radius.circular(15),
             ),
             child: Image.network(
-              selectedmeal.imageUrl,
+              selectedmeal!.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -63,7 +101,7 @@ class MealRecipePage extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   child: Card(
                     child: Text(
-                      '${index + 1} . ${selectedmeal.ingredients[index]}',
+                      '${index + 1} . ${selectedmeal!.ingredients[index]}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -71,7 +109,7 @@ class MealRecipePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                itemCount: selectedmeal.ingredients.length,
+                itemCount: selectedmeal!.ingredients.length,
               ),
             ),
           ),
@@ -94,7 +132,7 @@ class MealRecipePage extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: 5),
                   child: Card(
                     child: Text(
-                      '${index + 1} . ${selectedmeal.steps[index]}',
+                      '${index + 1} . ${selectedmeal!.steps[index]}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -102,7 +140,7 @@ class MealRecipePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                itemCount: selectedmeal.steps.length,
+                itemCount: selectedmeal!.steps.length,
               ),
             ),
           ),

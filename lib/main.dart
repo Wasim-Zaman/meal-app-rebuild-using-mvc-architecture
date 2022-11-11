@@ -24,8 +24,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Variables or Attributes
+  List<Meal> _availableMeals = DUMMY_MEALS;
+  final List<Meal> _favoritedMeals = [];
   FiltersData _filtersData = FiltersData();
 
+  // Methods
   void _setFilters(FiltersData filtersData) {
     setState(() {
       _filtersData = filtersData;
@@ -49,7 +53,24 @@ class _MyAppState extends State<MyApp> {
     }).toList();
   }
 
-  List<Meal> _availableMeals = DUMMY_MEALS;
+  // Set favorites attribute using method
+  void toggleFavorites(Meal meal) {
+    // If a meal is already favorite, make it un-favorite
+    if (_favoritedMeals.contains(meal)) {
+      setState(() {
+        _favoritedMeals.removeWhere((meal) {
+          return true;
+        });
+      });
+    }
+
+    // If a meal is not favorite, then make it favorite
+    else {
+      setState(() {
+        _favoritedMeals.add(meal);
+      });
+    }
+  }
 
   // This widget is the root of your application.
   @override
@@ -63,10 +84,10 @@ class _MyAppState extends State<MyApp> {
       // home: const CategoriesPage(),
       initialRoute: '/',
       routes: {
-        '/': (context) => const TabsPage(),
+        '/': (context) => TabsPage(_favoritedMeals),
         CategoryMealsPage.pageName: (context) =>
             CategoryMealsPage(_availableMeals),
-        MealRecipePage.pageName: (context) => const MealRecipePage(),
+        MealRecipePage.pageName: (context) => MealRecipePage(toggleFavorites),
         CategoriesPage.pageName: (context) => const CategoriesPage(),
         FiltersPage.pageName: (context) => FiltersPage(
               _filtersData,
