@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../pages/categories_page.dart';
+import '../pages/filters_page.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
 
@@ -42,7 +45,9 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              switchPage(context);
+              Navigator.of(context).pushReplacementNamed(
+                '/',
+              );
             },
           ),
           SizedBox(
@@ -60,7 +65,9 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              switchPage(context);
+              Navigator.of(context).pushReplacementNamed(
+                FiltersPage.pageName,
+              );
             },
           ),
         ],

@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/meal_item.dart';
-import '../../controllers/dummy_data.dart';
+import '../../models/meal.dart';
 
-class CategoryMealsPage extends StatelessWidget {
+class CategoryMealsPage extends StatefulWidget {
   static const String pageName = '/category-meals';
 
-  const CategoryMealsPage({super.key});
+  final List<Meal> availableMeals;
 
+  const CategoryMealsPage(this.availableMeals, {super.key});
+
+  @override
+  State<CategoryMealsPage> createState() => _CategoryMealsPageState();
+}
+
+class _CategoryMealsPageState extends State<CategoryMealsPage> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> routeArgs =
@@ -18,7 +25,7 @@ class CategoryMealsPage extends StatelessWidget {
     final String categoryTitle = routeArgs['title'];
 
     // grab the meal of the selected category (clicked category)
-    final List<dynamic> selectedMeal = DUMMY_MEALS.where((meal) {
+    final List<dynamic> selectedMeal = widget.availableMeals.where((meal) {
       return meal.categories.contains(categoryId);
     }).toList();
 
